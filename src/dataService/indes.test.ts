@@ -14,7 +14,7 @@ describe("DataService", () => {
         },
         {
           arrival: new Date("2024-02-01"),
-          departure: new Date("2024-02-02"),
+          departure: new Date("2024-02-03"),
           isOmitted: false,
           port: { id: "B", name: "Port B" },
         },
@@ -25,13 +25,13 @@ describe("DataService", () => {
       portCalls: [
         {
           arrival: new Date("2024-01-01"),
-          departure: new Date("2024-01-02"),
+          departure: new Date("2024-01-04"),
           isOmitted: false,
           port: { id: "B", name: "Port B" },
         },
         {
           arrival: new Date("2024-02-01"),
-          departure: new Date("2024-02-02"),
+          departure: new Date("2024-02-05"),
           isOmitted: false,
           port: { id: "C", name: "Port C" },
         },
@@ -78,8 +78,8 @@ describe("DataService", () => {
 
       expect(portsWithCalls).toEqual([
         { portId: "A", name: "Port A", durations: [86400000] },
-        { portId: "B", name: "Port B", durations: [86400000, 86400000] },
-        { portId: "C", name: "Port C", durations: [86400000] },
+        { portId: "B", name: "Port B", durations: [172800000, 259200000] },
+        { portId: "C", name: "Port C", durations: [345600000] },
       ]);
     });
   });
