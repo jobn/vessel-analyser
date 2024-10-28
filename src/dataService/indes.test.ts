@@ -12,6 +12,12 @@ describe("DataService", () => {
           isOmitted: false,
           port: { id: "A", name: "Port A" },
         },
+        {
+          arrival: new Date("2024-02-01"),
+          departure: new Date("2024-02-02"),
+          isOmitted: false,
+          port: { id: "B", name: "Port B" },
+        },
       ],
     },
     {
@@ -23,19 +29,43 @@ describe("DataService", () => {
           isOmitted: false,
           port: { id: "B", name: "Port B" },
         },
+        {
+          arrival: new Date("2024-02-01"),
+          departure: new Date("2024-02-02"),
+          isOmitted: false,
+          port: { id: "C", name: "Port C" },
+        },
       ],
     },
   ];
 
-  it("should setup and return ports", async () => {
-    const dataService = new DataService();
-    await dataService.setup(testData);
+  describe("getPorts", () => {
+    it("should setup and return ports", async () => {
+      const dataService = new DataService();
+      await dataService.setup(testData);
 
-    const ports = dataService.getPorts();
+      const ports = dataService.getPorts();
 
-    expect(ports).toEqual([
-      { id: "A", name: "Port A" },
-      { id: "B", name: "Port B" },
-    ]);
+      expect(ports).toEqual([
+        { id: "A", name: "Port A" },
+        { id: "B", name: "Port B" },
+        { id: "C", name: "Port C" },
+      ]);
+    });
+  });
+
+  describe("getPortsWithCalls", () => {
+    it("should return ports with calls", async () => {
+      const dataService = new DataService();
+      await dataService.setup(testData);
+
+      const portsWithCalls = dataService.getPortsWithCalls();
+
+      expect(portsWithCalls).toEqual([
+        { portId: "A", name: "Port A", callCount: 1 },
+        { portId: "B", name: "Port B", callCount: 2 },
+        { portId: "C", name: "Port C", callCount: 1 },
+      ]);
+    });
   });
 });

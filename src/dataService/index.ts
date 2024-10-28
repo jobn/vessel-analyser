@@ -16,6 +16,14 @@ export class DataService {
     return this.portIds.map((id) => this.ports[id]);
   }
 
+  getPortsWithCalls() {
+    return Object.entries(this.portCalls).map(([portId, calls]) => ({
+      portId,
+      name: this.ports[portId].name,
+      callCount: calls.length,
+    }));
+  }
+
   async setup(mockData: ValidatedRawData | undefined = undefined) {
     const rawData = mockData ?? (await fetchData());
 
