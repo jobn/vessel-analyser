@@ -24,6 +24,14 @@ export class DataService {
     }));
   }
 
+  getPortsWithCallDuration() {
+    return Object.entries(this.portCalls).map(([portId, calls]) => ({
+      portId,
+      name: this.ports[portId].name,
+      durations: calls.map((c) => c.duration),
+    }));
+  }
+
   async setup(mockData: ValidatedRawData | undefined = undefined) {
     const rawData = mockData ?? (await fetchData());
 

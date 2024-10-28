@@ -54,7 +54,7 @@ describe("DataService", () => {
     });
   });
 
-  describe("getPortsWithCalls", () => {
+  describe("getPortsWithCallCount", () => {
     it("should return ports with calls", async () => {
       const dataService = new DataService();
       await dataService.setup(testData);
@@ -65,6 +65,21 @@ describe("DataService", () => {
         { portId: "A", name: "Port A", callCount: 1 },
         { portId: "B", name: "Port B", callCount: 2 },
         { portId: "C", name: "Port C", callCount: 1 },
+      ]);
+    });
+  });
+
+  describe("getPortsWithCallDuration", () => {
+    it("should return ports with calls", async () => {
+      const dataService = new DataService();
+      await dataService.setup(testData);
+
+      const portsWithCalls = dataService.getPortsWithCallDuration();
+
+      expect(portsWithCalls).toEqual([
+        { portId: "A", name: "Port A", durations: [86400000] },
+        { portId: "B", name: "Port B", durations: [86400000, 86400000] },
+        { portId: "C", name: "Port C", durations: [86400000] },
       ]);
     });
   });
