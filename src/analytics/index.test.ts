@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { DataService } from "./index";
+import { DataService } from "../dataService";
+import { getPortsWithLeastCalls, getPortsWithMostCalls } from "./index";
 
-describe("DataService", () => {
+describe("analytics", () => {
   const testData = [
     {
       vessel: { imo: 1, name: "Vessel 1" },
@@ -39,31 +40,29 @@ describe("DataService", () => {
     },
   ];
 
-  describe("getPorts", () => {
-    it("should setup and return ports", async () => {
+  describe("getPortsWithMostCalls", () => {
+    it("should return the ports with the most calls", () => {
       const dataService = new DataService();
-      await dataService.setup(testData);
+      dataService.setup(testData);
 
-      const ports = dataService.getPorts();
+      const ports = getPortsWithMostCalls(dataService, 2);
 
       expect(ports).toEqual([
-        { id: "A", name: "Port A" },
-        { id: "B", name: "Port B" },
-        { id: "C", name: "Port C" },
+        { portId: "B", name: "Port B", callCount: 2 },
+        { portId: "A", name: "Port A", callCount: 1 },
       ]);
     });
   });
 
-  describe("getPortsWithCalls", () => {
-    it("should return ports with calls", async () => {
+  describe("getPortsWithLeastCalls", () => {
+    it("should return the ports with the most calls", () => {
       const dataService = new DataService();
-      await dataService.setup(testData);
+      dataService.setup(testData);
 
-      const portsWithCalls = dataService.getPortsWithCallCount();
+      const ports = getPortsWithLeastCalls(dataService, 2);
 
-      expect(portsWithCalls).toEqual([
+      expect(ports).toEqual([
         { portId: "A", name: "Port A", callCount: 1 },
-        { portId: "B", name: "Port B", callCount: 2 },
         { portId: "C", name: "Port C", callCount: 1 },
       ]);
     });

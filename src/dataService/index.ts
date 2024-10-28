@@ -16,7 +16,7 @@ export class DataService {
     return this.portIds.map((id) => this.ports[id]);
   }
 
-  getPortsWithCalls() {
+  getPortsWithCallCount() {
     return Object.entries(this.portCalls).map(([portId, calls]) => ({
       portId,
       name: this.ports[portId].name,
