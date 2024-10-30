@@ -25,9 +25,11 @@ export function getPortsWithDurationPercentiles(
 ) {
   const ports = dataService.getPortsWithCallDuration();
 
-  return ports.map((port) => ({
-    portId: port.portId,
-    name: port.name,
-    percentiles: percentile(percentiles, port.durations),
-  }));
+  return ports
+    .filter((p) => p.durations.length > 0)
+    .map((port) => ({
+      portId: port.portId,
+      name: port.name,
+      percentiles: percentile(percentiles, port.durations),
+    }));
 }

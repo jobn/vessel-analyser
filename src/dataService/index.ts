@@ -20,7 +20,7 @@ export class DataService {
     return Object.entries(this.portCalls).map(([portId, calls]) => ({
       portId,
       name: this.ports[portId].name,
-      callCount: calls.length,
+      callCount: calls.filter((c) => !c.isOmitted).length,
     }));
   }
 
@@ -28,7 +28,7 @@ export class DataService {
     return Object.entries(this.portCalls).map(([portId, calls]) => ({
       portId,
       name: this.ports[portId].name,
-      durations: calls.map((c) => c.duration),
+      durations: calls.filter((c) => !c.isOmitted).map((c) => c.duration),
     }));
   }
 

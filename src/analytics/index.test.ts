@@ -23,6 +23,12 @@ describe("analytics", () => {
           isOmitted: false,
           port: { id: "B", name: "Port B" },
         },
+        {
+          arrival: new Date("2024-010-01"),
+          departure: new Date("2024-10-03"),
+          isOmitted: true,
+          port: { id: "D", name: "Port D" },
+        },
       ],
     },
     {
@@ -39,6 +45,12 @@ describe("analytics", () => {
           departure: new Date("2024-02-05"),
           isOmitted: false,
           port: { id: "C", name: "Port C" },
+        },
+        {
+          arrival: new Date("2024-010-01"),
+          departure: new Date("2024-10-03"),
+          isOmitted: true,
+          port: { id: "D", name: "Port D" },
         },
       ],
     },
@@ -59,15 +71,15 @@ describe("analytics", () => {
   });
 
   describe("getPortsWithLeastCalls", () => {
-    it("should return the ports with the most calls", () => {
+    it("should return the ports with the least calls", () => {
       const dataService = new DataService();
       dataService.setup(testData);
 
       const ports = getPortsWithLeastCalls(dataService, 2);
 
       expect(ports).toEqual([
+        { portId: "D", name: "Port D", callCount: 0 },
         { portId: "A", name: "Port A", callCount: 1 },
-        { portId: "C", name: "Port C", callCount: 1 },
       ]);
     });
   });
