@@ -33,6 +33,10 @@ export function normaliseData(rawData: ValidatedRawData): NormalisedData {
         portIds.push(port.id);
       }
 
+      if (pc.isOmitted) {
+        continue;
+      }
+
       const arrival = new Date(pc.arrival);
       const departure = new Date(pc.departure);
       const duration = departure.getTime() - arrival.getTime();
@@ -40,7 +44,6 @@ export function normaliseData(rawData: ValidatedRawData): NormalisedData {
       const portCall: PortCall = {
         vesselImo: vessel.imo,
         portId: pc.port.id,
-        isOmitted: pc.isOmitted,
         arrival,
         departure,
         duration,

@@ -80,7 +80,6 @@ describe("normaliseData", () => {
           vesselImo: 1,
           arrival: new Date("2024-01-01"),
           departure: new Date("2024-01-02"),
-          isOmitted: false,
           duration: 86400000,
         },
       ],
@@ -90,7 +89,6 @@ describe("normaliseData", () => {
           vesselImo: 1,
           arrival: new Date("2024-02-01"),
           departure: new Date("2024-02-02"),
-          isOmitted: false,
           duration: 86400000,
         },
         {
@@ -98,7 +96,6 @@ describe("normaliseData", () => {
           vesselImo: 2,
           arrival: new Date("2024-01-01"),
           departure: new Date("2024-01-02"),
-          isOmitted: false,
           duration: 86400000,
         },
       ],
@@ -108,7 +105,42 @@ describe("normaliseData", () => {
           vesselImo: 2,
           arrival: new Date("2024-02-01"),
           departure: new Date("2024-02-02"),
-          isOmitted: false,
+          duration: 86400000,
+        },
+      ],
+    });
+  });
+
+  it("should not include omitted port calls", () => {
+    const testData = [
+      {
+        vessel: { imo: 1, name: "Vessel 1" },
+        portCalls: [
+          {
+            arrival: new Date("2024-01-01"),
+            departure: new Date("2024-01-02"),
+            isOmitted: true,
+            port: { id: "A", name: "Port A" },
+          },
+          {
+            arrival: new Date("2024-02-01"),
+            departure: new Date("2024-02-02"),
+            isOmitted: false,
+            port: { id: "B", name: "Port B" },
+          },
+        ],
+      },
+    ];
+
+    const { portCalls } = normaliseData(testData);
+
+    expect(portCalls).toEqual({
+      B: [
+        {
+          portId: "B",
+          vesselImo: 1,
+          arrival: new Date("2024-02-01"),
+          departure: new Date("2024-02-02"),
           duration: 86400000,
         },
       ],

@@ -11,7 +11,6 @@ export type Port = {
 export type PortCall = {
   vesselImo: number;
   portId: string;
-  isOmitted: boolean;
   arrival: Date;
   departure: Date;
   duration: number;
